@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyk.music.mapper.ComplexSelectMapper">
+    <select id="getMusicListByTagId" resultType="com.zyk.music.entity.vo.MusicBo">
+        select distinct m.id as                            id,
+                        m.music_name,
+                        m.artist_name,
+                        m.music_url,
+                        m.file_name,
+                        m.create_time,
+                        if(lm.id is not null, true, false) ifLove
+        from music m
+                     left join music_tag_relationship mtr
+                on m.id = mtr.music_id
+                     left join love_music lm on m.id = lm.music_id and lm.user_id=#{userId}
+        <where>
+            <if test="tagId != null and tagId != '' and tagId!='all'">
+                mtr.tag_id = #{tagId}
+            </if>
+            <if test="music.musicName != null and music.musicName != ''">
+                and m.music_name like concat('%', #{music.musicName}, '%')
+                        or m.artist_name like concat('%', #{music.musicName}, '%')
+            </if>
+        </where>
+        order by m.create_time desc, m.music_name
+    </select>
+
+    <select id="selectTagList" resultType="com.zyk.music.entity.vo.TagBo">
+        select * from (select tag.*, 1 flag, (select COUNT(tag_id) from music_tag_relationship as num where tag_id = tag.id) num
+        from tag
+                     left join music_tag_relationship mtr on tag.id = mtr.tag_id
+        where mtr.music_id = #{music.id}
+        union all
+        select tag.*, 0 flag, (select COUNT(tag_id) from music_tag_relationship as num where tag_id = tag.id) num
+        from tag
+        where id not in
+              (select tag_id from music_tag_relationship where music_id = #{music.id})) t <where>t.user_id=#{userId}</where>
+    </select>
+    <select id="selectLoveList" resultType="com.zyk.music.entity.vo.MusicBo">
+        select music.*, if(lm.id is not null, true, false) ifLove
+        from music
+                     left join love_music lm on music.id = lm.music_id
+        where user_id = #{userId}
+    </select>
+    <select id="selectTagListByUser" resultType="com.zyk.music.entity.vo.TagBo">
+        select tag.*, (select COUNT(tag_id) from music_tag_relationship as num where tag_id = tag.id) num
+        from tag
+        <where>tag.user_id=#{userId}</where>
+    </select>
+
+</mapper>

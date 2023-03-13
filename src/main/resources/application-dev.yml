@@ -1,0 +1,6 @@
+server:
+  port: 8700
+spring:
+  config:
+    activate:
+      on-profile: dev

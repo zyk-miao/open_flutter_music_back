@@ -1,0 +1,13 @@
+[open_flutter_music_back](https://github.com/zyk-miao/open_flutter_music_back)的后端项目，使用了springboot框架,minio作为对象存储。
+
+使用：
+配置mysql数据库，运行sql目录下的music.sql,修改application.yml的数据库配置。
+配置minio服务端，minio需要创建名为"music"的桶，以及配置桶Access Rules(prefix填*,access选readonly)，修改application.yml的minio配置,url是host+端口(例如:127.0.0.1:9000,example.com:9000),access是minio用户名,secret是minio的密码。
+
+docker部署运行：
+1.自行安装docker以及docker-compose
+2.上传depoy目录
+
+3.在depoy目录下运行
+
+docker-compose up -d

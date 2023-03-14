@@ -22,7 +22,7 @@ public class MinioUtils {
     private MinioClient minioClient;
     @Value("${minio.bucket}")
     private String bucket;
-    @Value("http://${minio.url}:9000")
+    @Value("http://${minio.prefix-url}")
     private String url;
 
     public String putObject(InputStream inputStream, String objectName) throws Exception {

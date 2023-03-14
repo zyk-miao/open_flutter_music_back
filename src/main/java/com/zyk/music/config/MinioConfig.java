@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MinioConfig {
 
-	@Value("http://${minio.url}:9000")
+	@Value("http://${minio.url}")
     private String url;
     @Value("${minio.access}")
     private String accessKey;

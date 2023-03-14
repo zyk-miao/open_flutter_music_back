@@ -1,0 +1,39 @@
+version: 1.0.0
+services:
+  mysql:
+    image: mysql
+    restart: always
+    container_name: mysql
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    environment:
+      - "MYSQL_ROOT_PASSWORD=yWzh3LMHxtCIcSGi" #数据库root密码
+      - "TZ=Asia/Shanghai"
+    command: --default-authentication-plugin=mysql_native_password #允许外网访问数据库
+    ports:
+      - 3306:3306
+  minio:
+    restart: always
+    image: minio/minio
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ACCESS_KEY: minio    #对象存储后台用户名
+      MINIO_SECRET_KEY: 1UxxJ3hYqDqtJ9vG #对象存储后台密码
+    volumes:
+      - ./minio_data:/data
+    command: server --console-address ':9001' /data
+  server:
+    working_dir: /opt/server
+    container_name: server
+    depends_on:
+      - minio
+      - mysql
+    restart: always
+    image: openjdk:17
+    ports:
+      - 8701:8701
+    volumes:
+      - ./server/:/opt/server/
+    entrypoint: java -jar music.jar

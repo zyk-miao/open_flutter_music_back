@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/music?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: root
+    password: yWzh3LMHxtCIcSGi
+    hikari:
+      max-lifetime: 60000
+      minimum-idle: 5
+      maximum-pool-size: 10
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  profiles:
+    active: prod
+
+mybatis:
+  #开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    call-setters-on-nulls: true
+  mapper-locations: classpath:/mapper/*.xml
+minio:
+  #从minio获取文件的服务器地址 需要修改
+  prefix-url: 127.0.0.1:9000
+  url: minio:9000
+  access: minio
+  secret: 1UxxJ3hYqDqtJ9vG
+  bucket: music
+  musicPrefix: musicFile/
+  imgPrefix: imgFile/

@@ -22,6 +22,7 @@ mybatis:
     call-setters-on-nulls: true
   mapper-locations: classpath:/mapper/*.xml
 minio:
+  prefix-url: ???
   url: ???
   access: ???
   secret: ???

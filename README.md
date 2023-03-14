@@ -14,4 +14,4 @@
 
 4. 访问minio后台(默认是IP:9001),配置bucket的policy为public
 
-[](https://github.com/zyk-miao/open_flutter_music_back/blob/master/img/public.png)
+![](https://github.com/zyk-miao/open_flutter_music_back/blob/master/img/public.png)

@@ -13,5 +13,5 @@
 3. 在depoy目录下运行`docker-compose up -d`(根据自我需求更改docker-compose.yml文件，如数据库密码，对象存储用户名密码，以及服务端口的映射)
 
 4. 访问minio后台(默认是IP:9001),配置bucket的policy为public
-   
-   [](https://github.com/zyk-miao/open_flutter_music_back/blob/master/img/public.png)
+
+[](https://github.com/zyk-miao/open_flutter_music_back/blob/master/img/public.png)
